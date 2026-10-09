@@ -11,6 +11,10 @@ patch_dir="$script_dir/patches"
 repository_path="$build_root/ungoogled-chromium-macos"
 fingerprint_path="$repository_path/ungoogled-chromium"
 
+# Reject unsupported machines and insufficient free disk space before any network download.
+# Keep this check in Prepare-Source as well as in the documented setup workflow.
+bash "$script_dir/Check-Prerequisites.sh" "$build_root"
+
 lock_value() {
   python3 - "$lock_path" "$1" <<'PY'
 import json, sys
